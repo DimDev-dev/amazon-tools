@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -25,7 +26,7 @@ const TruckOptimiser = ({ title, defaultGp = 0, defaultDp = 0 }) => {
   });
 
   const [result, setResult] = useState("");
-
+  const [remainingPalettes, setRemainingPalettes] = useState(0);
   const maxPalette = 66;
   const demiPalettePerGrande = 2;
 
@@ -50,12 +51,13 @@ const TruckOptimiser = ({ title, defaultGp = 0, defaultDp = 0 }) => {
 
     if (totalDemiPalette <= maxPalette) {
       setResult(
-        `Vous pouvez utiliser le camion, il reste ${Math.floor(
+        `Vous pouvez charger le camion, il reste ${Math.floor(
           restDemiPaletteSuccess / demiPalettePerGrande
         )} palette(s) et ${
           restDemiPaletteSuccess % demiPalettePerGrande
         } demi-palette(s) disponible(s).`
       );
+      setRemainingPalettes(totalDemiPalette);
     } else {
       const additionalTrucks = Math.ceil(restDemiPaletteError / maxPalette) + 1;
       const remainingPalettes = restDemiPaletteError % maxPalette;
@@ -66,6 +68,7 @@ const TruckOptimiser = ({ title, defaultGp = 0, defaultDp = 0 }) => {
           remainingPalettes % demiPalettePerGrande
         } demi-palette(s) dans le dernier camion.`
       );
+      setRemainingPalettes(remainingPalettes);
     }
   };
 
@@ -107,7 +110,17 @@ const TruckOptimiser = ({ title, defaultGp = 0, defaultDp = 0 }) => {
           <Button type="submit">Soumettre</Button>
         </form>
       </CardContent>
-      <CardFooter>{result}</CardFooter>
+      <CardFooter>
+        <div className="flex flex-col gap-3">
+          {result}
+          <div>
+            {`Taux de remplissage du camion: ${Math.ceil(
+              (remainingPalettes / maxPalette) * 100
+            )}%`}
+          </div>
+          <Progress value={(remainingPalettes / maxPalette) * 100} />
+        </div>
+      </CardFooter>
     </Card>
   );
 };
