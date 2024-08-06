@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="h-9 pl-2 flex items-center">
+    <header className="h-9 pl-2 flex items-center bg-primary text-primary-foreground">
       <Sheet>
         <SheetTrigger>
           <div className="flex flex-col gap-3 transition-transform duration-200 hover:rotate-45 ">

@@ -6,7 +6,7 @@ import LinkUtils from "./LinkUtils";
 
 const Home = () => {
   return (
-    <main className="flex flex-grow min-h-screen bg-background p-4 justify-center items-center overflow-y-auto">
+    <main className="flex flex-grow min-h-screen bg-background text-foreground p-4 justify-center items-center overflow-y-auto">
       <Routes>
         <Route path="/" element={<Acceuil />} />
         <Route path="/truck-optimiser" element={<CardTruck />} />
